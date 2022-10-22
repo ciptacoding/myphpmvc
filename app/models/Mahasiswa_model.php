@@ -2,26 +2,26 @@
 
 class Mahasiswa_model
 {
-  private $dbh; //database handler
-  private $stmt; //statement
+  private $tabel = 'mahasiswa';
+  private $db;
 
   public function __construct()
   {
-    // data source name
-    $dsn = 'mysql:host=localhost;dbname=phpmvc';
-    // cek koneksinya
-    try {
-      $this->dbh = new PDO($dsn, 'root', '');
-    } catch (PDOException $e) {
-      die($e->getMessage());
-    }
+    $this->db = new Database; //instance class Database, sehingga smua methodnya bisa digunakan
   }
 
   public function getAllMhs()
   {
-    $this->stmt = $this->dbh->prepare('SELECT * FROM mahasiswa');
-    $this->stmt->execute();
-    return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+    $this->db->query('SELECT * FROM ' . $this->tabel);
+    return $this->db->resultSet();
+    // method query dan resultSet merupakan hasil dari instance class Database
+  }
+
+  public function getDetailMhs($id)
+  {
+    $this->db->query('SELECT * FROM ' . $this->tabel . ' WHERE id=:id');
+    $this->db->bind('id', $id);
+    return $this->db->single();
   }
 }
 
