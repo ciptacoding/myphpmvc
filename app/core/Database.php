@@ -58,7 +58,7 @@ class Database
 
   public function execute()
   {
-    $this->stmt->execute();
+    $this->stmt->execute(); //function bawaan PDO
   }
 
   public function resultSet()
@@ -71,5 +71,10 @@ class Database
   {
     $this->execute();
     return $this->stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+  public function rowCount()
+  {
+    return $this->stmt->rowCount(); // rowCount function bawaan PDO
   }
 }
